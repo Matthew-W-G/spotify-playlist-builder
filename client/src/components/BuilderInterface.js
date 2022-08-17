@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import styles from './BuilderInterface.module.css'
+import Customize from './Customize';
+import PlaylistDisplay from './PlaylistDisplay';
 
 function BuilderInterface(props) {
+    const [valuesCaputured, setValuesCaptured] = useState(false);
+    let phrase = ""
+    let size = 0
+
+    function setInputs(newPhrase, newSize) {
+        phrase = newPhrase
+        size = newSize
+        setValuesCaptured(true)
+    }
+
     return (
-        <div className={styles.background}>{props.code}</div>
+        valuesCaputured ?
+            <PlaylistDisplay phrase={phrase} size={size} accessToken={props.accessToken}></PlaylistDisplay>
+            : <Customize setValues={setInputs}></Customize>
     )
 }
 

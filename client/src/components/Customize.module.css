@@ -1,0 +1,33 @@
+.input {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px;
+    background-color: white;
+    height: 40px;
+    position: relative;
+    padding: 0px 16px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Gotham SSm A', 'Gotham SSm B', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: normal;
+    outline: none;
+    vertical-align: middle;
+}
+
+.phrase {
+    width: 20%;
+}
+
+.size {
+    width: 5%;
+}
+
+.submit {
+    width: 10%;
+}
+
+.container {
+    height: 100px;
+}
