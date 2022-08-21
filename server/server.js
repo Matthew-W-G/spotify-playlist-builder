@@ -15,6 +15,7 @@ app.post('/login', (req, res) => {
    
     var credentials = {
         clientId: 'bc038703857746eaab7721c0862ae10e',
+        clientSecret: '887f42928c25408e9d63cb7ba8a86ab1',
         redirectUri: 'http://localhost:3000/'
     };
       

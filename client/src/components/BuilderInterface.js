@@ -5,14 +5,17 @@ import PlaylistDisplay from './PlaylistDisplay';
 
 function BuilderInterface(props) {
     const [valuesCaputured, setValuesCaptured] = useState(false);
-    let phrase = ""
-    let size = 0
+    const [phrase, setPhrase] = useState("");
+    const [size, setSize] = useState("");
+
 
     function setInputs(newPhrase, newSize) {
-        phrase = newPhrase
-        size = newSize
+        setPhrase(newPhrase)
+        setSize(newSize)
         setValuesCaptured(true)
     }
+
+    console.log(phrase);
 
     return (
         valuesCaputured ?
