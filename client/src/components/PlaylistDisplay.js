@@ -1,44 +1,68 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import spotifyWebAPI from 'spotify-web-api-node'
 
 function PlaylistDisplay(props) {
+    const [val, setVal] = useState([])
+
+    useEffect(() => {
+        getFullTracks(spotifyApi, "dance", 50).then(response => setVal(response))
+    }, [])
+
+
     var spotifyApi = new spotifyWebAPI({
         clientId: 'bc038703857746eaab7721c0862ae10e',
     });
     spotifyApi.setAccessToken(props.accessToken)
 
-    getTopPlaylists(spotifyApi, 'Dance');
+    console.log(val)
 
     return (
         <div>
+            {val[0]}
         </div>
     )
 }
 
-function getTopPlaylists(spotifyApi, phrase) {
-    spotifyApi.searchPlaylists('Dance')
-        .then(response => {
-            const data = response.body.playlists.items;
-            getTracks(spotifyApi, data.map(x => String(x.id)));
-        });
-}
 
-function getTracks(spotifyApi, ids) {
-    for (var i = 0; i < ids.length; i++) {
-        spotifyApi.getPlaylistTracks(ids[i], {
+async function getFullTracks(spotifyApi, phrase, size) {
+    const data = await spotifyApi.searchPlaylists('80s bops', {limit:20})
+    const playlistIDList = []
+    for(var i = 0; i < data.body.playlists.items.length; i++) {
+        playlistIDList.push( data.body.playlists.items[i].id)
+    }
+
+    var trackHolder = [];
+    for(var i = 0; i < playlistIDList.length; i++) {
+        const trackData = await spotifyApi.getPlaylistTracks(playlistIDList[i], {
             offset: 1,
             limit: 15,
-        }).then(response => {
-            for(var x = 0; x < response.body.items.length; x++) {
-                filterTracks(spotifyApi, response.body.items[x].track.id);
-            }
-        });
+        })
+        for(var x = 0; x < 15; x++) {
+            trackHolder.push(trackData.body.items[x].track.id);
+        }
     }
-}
 
-function filterTracks(spotifyApi, id) {
-    console.log(id);
-}
 
+    const userTopArtists = await spotifyApi.getMyTopArtists({limit: 50});
+    const userTopArtistsID = []
+    for(var i = 0; i < userTopArtists.body.items.length; i++) {
+        userTopArtistsID.push(userTopArtists.body.items[i].id)
+    }
+
+    const userTopTracks = await spotifyApi.getMyTopTracks({limit: 50});
+    const userTopTracksID = []
+    for(var i = 0; i < userTopTracks.body.items.length; i++) {
+        userTopTracksID.push(userTopTracks.body.items[i].id)
+    }
+    console.log(userTopTracksID)
+
+
+    const matchingTracks = trackHolder.filter(element => userTopTracksID.includes(element));
+
+    
+
+
+    return trackHolder;
+}
 
 export default PlaylistDisplay;
