@@ -6,7 +6,7 @@ import PlaylistDisplay from './PlaylistDisplay';
 function BuilderInterface(props) {
     const [valuesCaputured, setValuesCaptured] = useState(false);
     const [phrase, setPhrase] = useState("");
-    const [size, setSize] = useState("");
+    const [size, setSize] = useState();
 
 
     function setInputs(newPhrase, newSize) {

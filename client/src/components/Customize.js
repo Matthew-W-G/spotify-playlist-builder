@@ -6,7 +6,7 @@ import styles from './Customize.module.css'
 
 function Customize(props) {
     const [phrase, setPhrase] = useState();
-    const [size, setSize] = useState();
+    const [size, setSize] = useState(10);
 
     function submitHandler(event) {
         event.preventDefault();
